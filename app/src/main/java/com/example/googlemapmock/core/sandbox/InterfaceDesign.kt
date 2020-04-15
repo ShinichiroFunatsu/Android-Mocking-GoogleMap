@@ -10,4 +10,10 @@ fun moveToMyLocation(direction: Location) {
     mapMoveQuery { move ->
         move from here to direction
     }
+    mapMoveQuery { move ->
+        move to here
+    }
+    mapMoveQuery { move ->
+        move to direction
+    }
 }
