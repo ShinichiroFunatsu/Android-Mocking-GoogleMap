@@ -1,6 +1,7 @@
 package com.example.googlemapmock.core.googlemap
 
 import android.location.Location
+import android.view.MotionEvent
 import com.example.googlemapmock.core.model.BaseMap
 import com.example.googlemapmock.core.model.Zoom
 
@@ -11,4 +12,5 @@ interface MapController {
     fun searchKeywords(vararg word: String)
     fun searchLocation(location: Location)
     fun observePositionChanged(onChanged: (location: Location) -> Unit)
+    fun observeUserTouchEvent(dispatchEvent: (MotionEvent) -> Unit)
 }
