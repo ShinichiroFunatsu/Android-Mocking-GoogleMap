@@ -1,7 +1,7 @@
 package com.example.googlemapmock.core.model
 
 enum class BaseMap {
-    RoadMap, // default
-    Satellite, //（衛星）
-    Terrain, //（地形図）
+    ROAD_MAP, // default
+    SATELLITE, // 衛星
+    TERRAIN, // 地形図
 }
