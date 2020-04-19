@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hide_bottom_view_on_touch_behavior" translatable="false">
+        com.example.googlemapmock.map.BottomNavigationBehavior
+    </string>
+</resources>

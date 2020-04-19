@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GoogleMapMock</string>
+    <string name="nav_explore">スポット</string>
+    <string name="nav_commute">通勤</string>
+    <string name="nav_saved">保存済み</string>
+    <string name="nav_contribute">投稿</string>
+    <string name="nav_updates">最新</string>
+</resources>

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">GoogleMapMock</string>
+
+    <!--  menu  -->
+    <string name="nav_explore">Explore</string>
+    <string name="nav_commute">Commute</string>
+    <string name="nav_saved">Saved</string>
+    <string name="nav_contribute">Contribute</string>
+    <string name="nav_updates">Updates</string>
+
 </resources>
