@@ -1,3 +1,5 @@
+@file:Suppress("unused") // from string resource calling
+
 package com.example.googlemapmock.map
 
 import android.animation.Animator
