@@ -7,7 +7,6 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.TimeInterpolator
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ViewGroup.MarginLayoutParams
@@ -30,7 +29,9 @@ class BottomNavigationBehavior(
 
     private lateinit var bottomNavigationView: BottomNavigationView
     override fun onLayoutChild(
-        parent: CoordinatorLayout, child: BottomNavigationView, layoutDirection: Int
+        parent: CoordinatorLayout,
+        child: BottomNavigationView,
+        layoutDirection: Int
     ): Boolean {
         val paramsCompat = child.layoutParams as MarginLayoutParams
         height = child.measuredHeight + paramsCompat.bottomMargin
@@ -38,7 +39,11 @@ class BottomNavigationBehavior(
         return super.onLayoutChild(parent, child, layoutDirection)
     }
 
-    override fun onTouchEvent(parent: CoordinatorLayout, child: BottomNavigationView, ev: MotionEvent): Boolean {
+    override fun onTouchEvent(
+        parent: CoordinatorLayout,
+        child: BottomNavigationView,
+        ev: MotionEvent
+    ): Boolean {
         return if (gestureDetector.onTouchEvent(ev)) {
             true
         } else {
@@ -103,7 +108,10 @@ class BottomNavigationBehavior(
     }
 
     private fun animateChildTo(
-        child: BottomNavigationView, targetY: Int, duration: Long, interpolator: TimeInterpolator
+        child: BottomNavigationView,
+        targetY: Int,
+        duration: Long,
+        interpolator: TimeInterpolator
     ) {
         currentAnimator = child
             .animate()
@@ -116,14 +124,6 @@ class BottomNavigationBehavior(
                         currentAnimator = null
                     }
                 })
-    }
-
-    companion object {
-        private const val ENTER_ANIMATION_DURATION = 225
-        private const val EXIT_ANIMATION_DURATION = 175
-        private const val STATE_SHOWN = 1
-        private const val STATE_HIDDEN = 2
-//        private const val DEBUG_TAG = "BottomNavigationBehavior"
     }
 
     override fun onDown(event: MotionEvent): Boolean {
@@ -180,4 +180,11 @@ class BottomNavigationBehavior(
         return true
     }
 
+    companion object {
+        private const val ENTER_ANIMATION_DURATION = 225
+        private const val EXIT_ANIMATION_DURATION = 175
+        private const val STATE_SHOWN = 1
+        private const val STATE_HIDDEN = 2
+//        private const val DEBUG_TAG = "BottomNavigationBehavior"
+    }
 }

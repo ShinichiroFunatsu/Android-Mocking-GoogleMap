@@ -12,7 +12,6 @@ infix fun MapDirectionQuery.from(origin: Location): MapDirectionQuery.From =
 infix fun MapDirectionQuery.From.to(destination: Location): MapDirectionQuery.FromTo =
     MapDirectionQuery.FromTo(this.origin, destination)
 
-
 object MapDirectionQuery {
     data class From(val origin: Location)
     data class FromTo(val origin: Location, val destination: Location)

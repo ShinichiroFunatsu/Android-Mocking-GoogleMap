@@ -9,8 +9,6 @@ fun mapMoveQuery(block: (MapMoveQuery) -> MapMoveQuery.To) {
 infix fun MapMoveQuery.to(location: Location): MapMoveQuery.To =
     MapMoveQuery.To(location)
 
-
 object MapMoveQuery {
     data class To(val to: Location)
 }
-
