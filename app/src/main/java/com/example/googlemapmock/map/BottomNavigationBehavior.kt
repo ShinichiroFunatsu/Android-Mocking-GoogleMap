@@ -7,12 +7,12 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.TimeInterpolator
 import android.content.Context
 import android.util.AttributeSet
-import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewPropertyAnimator
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GestureDetectorCompat
+import com.example.googlemapmock.map.ktx.GestureDetectorCompat
 import com.google.android.material.animation.AnimationUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.properties.Delegates
@@ -23,9 +23,7 @@ import kotlin.properties.Delegates
 class BottomNavigationBehavior(
     context: Context,
     attributeSet: AttributeSet? = null
-) : CoordinatorLayout.Behavior<BottomNavigationView>(context, attributeSet),
-    GestureDetector.OnGestureListener,
-    GestureDetector.OnDoubleTapListener {
+) : CoordinatorLayout.Behavior<BottomNavigationView>(context, attributeSet) {
 
     private lateinit var bottomNavigationView: BottomNavigationView
     override fun onLayoutChild(
@@ -55,9 +53,9 @@ class BottomNavigationBehavior(
     private var height by Delegates.notNull<Int>()
     private var currentState = STATE_SHOWN
     private val gestureDetector: GestureDetectorCompat by lazy {
-        GestureDetectorCompat(context, this).apply {
-            setOnDoubleTapListener(this@BottomNavigationBehavior)
-        }
+        GestureDetectorCompat(context, onSingleTapListener = {
+          onSingleTap()
+        })
     }
 
     private fun onSingleTap(): Boolean {
@@ -126,65 +124,11 @@ class BottomNavigationBehavior(
                 })
     }
 
-    override fun onDown(event: MotionEvent): Boolean {
-//        Log.d(DEBUG_TAG, "onDown: $event")
-        return true
-    }
-
-    override fun onFling(
-        event1: MotionEvent,
-        event2: MotionEvent,
-        velocityX: Float,
-        velocityY: Float
-    ): Boolean {
-//        Log.d(DEBUG_TAG, "onFling: $event1 $event2")
-        return true
-    }
-
-    override fun onLongPress(event: MotionEvent) {
-//        Log.d(DEBUG_TAG, "onLongPress: $event")
-    }
-
-    override fun onScroll(
-        event1: MotionEvent,
-        event2: MotionEvent,
-        distanceX: Float,
-        distanceY: Float
-    ): Boolean {
-//        Log.d(DEBUG_TAG, "onScroll: $event1 $event2")
-        return true
-    }
-
-    override fun onShowPress(event: MotionEvent) {
-//        Log.d(DEBUG_TAG, "onShowPress: $event")
-    }
-
-    override fun onSingleTapUp(event: MotionEvent): Boolean {
-//        Log.d(DEBUG_TAG, "onSingleTapUp: $event")
-        onSingleTap()
-        return true
-    }
-
-    override fun onDoubleTap(event: MotionEvent): Boolean {
-//        Log.d(DEBUG_TAG, "onDoubleTap: $event")
-        return true
-    }
-
-    override fun onDoubleTapEvent(event: MotionEvent): Boolean {
-//        Log.d(DEBUG_TAG, "onDoubleTapEvent: $event")
-        return true
-    }
-
-    override fun onSingleTapConfirmed(event: MotionEvent): Boolean {
-//        Log.d(DEBUG_TAG, "onSingleTapConfirmed: $event")
-        return true
-    }
-
     companion object {
         private const val ENTER_ANIMATION_DURATION = 225
         private const val EXIT_ANIMATION_DURATION = 175
         private const val STATE_SHOWN = 1
         private const val STATE_HIDDEN = 2
-//        private const val DEBUG_TAG = "BottomNavigationBehavior"
+        private const val DEBUG_TAG = "BottomNavigationBehavior"
     }
 }
