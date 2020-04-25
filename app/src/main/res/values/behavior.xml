@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hide_bottom_view_on_touch_behavior" translatable="false">
-        com.example.googlemapmock.map.BottomNavigationBehavior
+        com.example.googlemapmock.map.behavior.BottomNavigationBehavior
+    </string>
+    <string name="hide_search_omnibox_touch_behavior" translatable="false">
+        com.example.googlemapmock.map.behavior.SearchOmniBoxBehavior
     </string>
 </resources>

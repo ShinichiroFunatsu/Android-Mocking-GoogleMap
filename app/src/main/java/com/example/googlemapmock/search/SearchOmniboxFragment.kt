@@ -7,10 +7,6 @@ import com.example.googlemapmock.R
 
 class SearchOmniboxFragment : Fragment(R.layout.search_omnibox_fragment) {
 
-    companion object {
-        fun newInstance() = SearchOmniboxFragment()
-    }
-
     private lateinit var viewModel: SearchOmniboxViewModel
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

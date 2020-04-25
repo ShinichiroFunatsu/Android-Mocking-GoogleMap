@@ -1,102 +1,84 @@
 @file:Suppress("unused") // from string resource calling
 
-package com.example.googlemapmock.map
+package com.example.googlemapmock.map.behavior
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.TimeInterpolator
 import android.content.Context
 import android.util.AttributeSet
-import android.view.MotionEvent
-import android.view.ViewGroup.MarginLayoutParams
+import android.view.ViewGroup
 import android.view.ViewPropertyAnimator
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.GestureDetectorCompat
-import com.example.googlemapmock.map.ktx.GestureDetectorCompat
+import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.animation.AnimationUtils
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.properties.Delegates
 
-/**
- * refer HideBottomViewOnScrollBehavior
- */
-class BottomNavigationBehavior(
+class SearchOmniBoxBehavior(
     context: Context,
     attributeSet: AttributeSet? = null
-) : CoordinatorLayout.Behavior<BottomNavigationView>(context, attributeSet) {
+) : CoordinatorLayout.Behavior<FragmentContainerView>(context, attributeSet), OnSingleTapBehavior {
 
-    private val singleTapDetector: GestureDetectorCompat by lazy {
-        GestureDetectorCompat(context, onSingleTapListener = { onSingleTap() })
-    }
-    private lateinit var bottomNavigationViewAnimator: BottomNavigationViewAnimator
+    private lateinit var searchOmniBoxContainerAnimator: SearchOmniBoxContainerAnimator
     private var currentState = STATE_SHOWN
 
     override fun onLayoutChild(
         parent: CoordinatorLayout,
-        child: BottomNavigationView,
+        child: FragmentContainerView,
         layoutDirection: Int
     ): Boolean {
-        bottomNavigationViewAnimator = BottomNavigationViewAnimator {
-            val paramsCompat = child.layoutParams as MarginLayoutParams
-            height = child.measuredHeight + paramsCompat.bottomMargin
-            bottomNavigationView = child
-        }
+        searchOmniBoxContainerAnimator =
+            SearchOmniBoxContainerAnimator {
+                val paramsCompat = child.layoutParams as ViewGroup.MarginLayoutParams
+                height = child.measuredHeight + paramsCompat.bottomMargin
+                omniSearchBoxContainer = child
+            }
         return super.onLayoutChild(parent, child, layoutDirection)
     }
 
-    override fun onTouchEvent(
-        parent: CoordinatorLayout,
-        child: BottomNavigationView,
-        ev: MotionEvent
-    ): Boolean {
-        return if (singleTapDetector.onTouchEvent(ev)) {
-            true
-        } else {
-            super.onTouchEvent(parent, child, ev)
-        }
-    }
-
-    private fun onSingleTap(): Boolean {
+    override fun onSingleTap(): Boolean {
         toggleShowHide()
         return false
     }
 
     private fun toggleShowHide() {
         if (currentState == STATE_SHOWN) {
-            slideDown()
-        } else {
             slideUp()
+        } else {
+            slideDown()
         }
     }
 
     private fun slideUp() {
-        if (currentState == STATE_SHOWN) {
-            return
-        }
-        bottomNavigationViewAnimator.slideUp()
-        currentState = STATE_SHOWN
-    }
-
-    private fun slideDown() {
         if (currentState == STATE_HIDDEN) {
             return
         }
-        bottomNavigationViewAnimator.slideDown()
-        currentState = STATE_HIDDEN
+        searchOmniBoxContainerAnimator.slideUp()
+        currentState =
+            STATE_HIDDEN
+    }
+
+    private fun slideDown() {
+        if (currentState == STATE_SHOWN) {
+            return
+        }
+        searchOmniBoxContainerAnimator.slideDown()
+        currentState =
+            STATE_SHOWN
     }
 
     companion object {
         private const val STATE_SHOWN = 1
         private const val STATE_HIDDEN = 2
-        private const val DEBUG_TAG = "BottomNavigationBehavior"
+        private const val DEBUG_TAG = "OmniSearchBoxBehavior"
     }
 }
 
-private class BottomNavigationViewAnimator(block: BottomNavigationViewAnimator.() -> Unit) {
+private class SearchOmniBoxContainerAnimator(block: SearchOmniBoxContainerAnimator.() -> Unit) {
     var height by Delegates.notNull<Int>()
     private var currentAnimator: ViewPropertyAnimator? = null
-    private lateinit var _child: BottomNavigationView
-    var bottomNavigationView: BottomNavigationView
+    private lateinit var _child: FragmentContainerView
+    var omniSearchBoxContainer: FragmentContainerView
         get() = _child
         set(value) {
             _child = value
@@ -113,7 +95,7 @@ private class BottomNavigationViewAnimator(block: BottomNavigationViewAnimator.(
         }
         animateChildTo(
             _child,
-            0,
+            -height,
             ENTER_ANIMATION_DURATION.toLong(),
             AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR
         )
@@ -126,14 +108,14 @@ private class BottomNavigationViewAnimator(block: BottomNavigationViewAnimator.(
         }
         animateChildTo(
             _child,
-            height,
+            0,
             EXIT_ANIMATION_DURATION.toLong(),
             AnimationUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR
         )
     }
 
     private fun animateChildTo(
-        child: BottomNavigationView,
+        child: FragmentContainerView,
         targetY: Int,
         duration: Long,
         interpolator: TimeInterpolator

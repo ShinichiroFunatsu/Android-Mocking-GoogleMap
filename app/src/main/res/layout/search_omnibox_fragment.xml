@@ -5,18 +5,18 @@
     android:layout_height="match_parent"
     android:alpha="1"
     android:elevation="3dp"
-    tools:context=".search.SearchOmniboxFragment"
-    tools:background="@android:color/darker_gray">
+    tools:background="@android:color/darker_gray"
+    tools:context=".search.SearchOmniboxFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_margin="8dp"
+        android:background="@drawable/bg_search_omnibox"
         android:orientation="horizontal"
         android:paddingStart="20dp"
         android:paddingEnd="3dp"
-        tools:ignore="UselessParent"
-        android:background="@drawable/bg_search_omnibox">
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@+id/search_omnibox_text_box"
@@ -43,10 +43,10 @@
 
             <ImageView
                 android:id="@+id/og_apd_internal_image_view"
-                android:src="@drawable/ic_account_default"
-                android:padding="8dp"
                 android:layout_width="48dp"
-                android:layout_height="48dp" />
+                android:layout_height="48dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_account_default" />
 
             <ImageView
                 android:id="@+id/og_apd_ring_view"
