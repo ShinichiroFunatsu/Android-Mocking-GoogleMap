@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import androidx.core.view.GestureDetectorCompat
+import com.example.googlemapmock.BuildConfig
 
 private typealias OnSingleTapListener = () -> Unit
 private typealias OnLongPressListener = () -> Unit
@@ -25,13 +26,14 @@ private class SimpleOnGestureListenerImpl(
     private val onSingleTapListener: OnSingleTapListener? = null,
     private val onLongPressListener: OnLongPressListener? = null,
     private val listener: GestureDetector.SimpleOnGestureListener =
-        LoggingOnGestureListenerImpl(DEBUG_TAG)
+        if (BuildConfig.DEBUG) LoggingOnGestureListenerImpl(DEBUG_TAG)
+        else GestureDetector.SimpleOnGestureListener()
 ) : GestureDetector.OnGestureListener by listener,
     GestureDetector.OnDoubleTapListener by listener {
 
     override fun onDown(event: MotionEvent): Boolean {
         Log.d(DEBUG_TAG, "onDown: $event")
-        return true
+        return onSingleTapListener != null
     }
 
     override fun onLongPress(event: MotionEvent) {
