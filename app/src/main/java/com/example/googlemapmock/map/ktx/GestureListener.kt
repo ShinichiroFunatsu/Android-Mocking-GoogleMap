@@ -10,35 +10,43 @@ import androidx.lifecycle.MutableLiveData
 import com.example.googlemapmock.BuildConfig
 import com.example.googlemapmock.map.LoggingOnGestureListenerImpl
 
+interface LifecycleAwareGestureDetector {
+    val onSingleTapUp: LiveData<Unit>
+    val onLongPress: LiveData<Unit>
+    fun onTouchEvent(event: MotionEvent): Boolean
+}
 @Suppress("FunctionName")
 fun GestureDetectorCompat(
     context: Context
 ): LifecycleAwareGestureDetector {
-    return LifecycleAwareGestureDetector(
+    return LifecycleAwareGestureDetectorImpl(
         context,
         SimpleOnGestureListenerImpl()
     )
 }
 
-class LifecycleAwareGestureDetector(
+private class LifecycleAwareGestureDetectorImpl(
     context: Context,
     private val listener: SimpleOnGestureListenerImpl
-) {
+) : LifecycleAwareGestureDetector {
 
     private val gestureDetectorCompat: GestureDetectorCompat by lazy {
         GestureDetectorCompat(context, listener)
     }
 
-    val onSingleTapUp: LiveData<Unit>
+    override val onSingleTapUp: LiveData<Unit>
         get() = listener.onSingleTapUp
 
-    fun onTouchEvent(event: MotionEvent): Boolean {
+    override val onLongPress: LiveData<Unit>
+        get() = listener.onLongPress
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
         gestureDetectorCompat.onTouchEvent(event)
         return true
     }
 }
 
-class SimpleOnGestureListenerImpl(
+private class SimpleOnGestureListenerImpl(
     private val listener: GestureDetector.SimpleOnGestureListener =
         if (BuildConfig.DEBUG) LoggingOnGestureListenerImpl(DEBUG_TAG)
         else GestureDetector.SimpleOnGestureListener()
