@@ -25,15 +25,22 @@ class BottomNavigationBehavior(
     attributeSet: AttributeSet? = null
 ) : CoordinatorLayout.Behavior<BottomNavigationView>(context, attributeSet) {
 
-    private lateinit var bottomNavigationView: BottomNavigationView
+    private val singleTapDetector: GestureDetectorCompat by lazy {
+        GestureDetectorCompat(context, onSingleTapListener = { onSingleTap() })
+    }
+    private lateinit var bottomNavigationViewAnimator: BottomNavigationViewAnimator
+    private var currentState = STATE_SHOWN
+
     override fun onLayoutChild(
         parent: CoordinatorLayout,
         child: BottomNavigationView,
         layoutDirection: Int
     ): Boolean {
-        val paramsCompat = child.layoutParams as MarginLayoutParams
-        height = child.measuredHeight + paramsCompat.bottomMargin
-        bottomNavigationView = child
+        bottomNavigationViewAnimator = BottomNavigationViewAnimator {
+            val paramsCompat = child.layoutParams as MarginLayoutParams
+            height = child.measuredHeight + paramsCompat.bottomMargin
+            bottomNavigationView = child
+        }
         return super.onLayoutChild(parent, child, layoutDirection)
     }
 
@@ -42,20 +49,11 @@ class BottomNavigationBehavior(
         child: BottomNavigationView,
         ev: MotionEvent
     ): Boolean {
-        return if (gestureDetector.onTouchEvent(ev)) {
+        return if (singleTapDetector.onTouchEvent(ev)) {
             true
         } else {
             super.onTouchEvent(parent, child, ev)
         }
-    }
-
-    private var currentAnimator: ViewPropertyAnimator? = null
-    private var height by Delegates.notNull<Int>()
-    private var currentState = STATE_SHOWN
-    private val gestureDetector: GestureDetectorCompat by lazy {
-        GestureDetectorCompat(context, onSingleTapListener = {
-          onSingleTap()
-        })
     }
 
     private fun onSingleTap(): Boolean {
@@ -65,40 +63,69 @@ class BottomNavigationBehavior(
 
     private fun toggleShowHide() {
         if (currentState == STATE_SHOWN) {
-            slideDown(bottomNavigationView)
+            slideDown()
         } else {
-            slideUp(bottomNavigationView)
+            slideUp()
         }
     }
 
-    private fun slideUp(child: BottomNavigationView) {
+    private fun slideUp() {
         if (currentState == STATE_SHOWN) {
             return
         }
+        bottomNavigationViewAnimator.slideUp()
+        currentState = STATE_SHOWN
+    }
+
+    private fun slideDown() {
+        if (currentState == STATE_HIDDEN) {
+            return
+        }
+        bottomNavigationViewAnimator.slideDown()
+        currentState = STATE_HIDDEN
+    }
+
+    companion object {
+        private const val STATE_SHOWN = 1
+        private const val STATE_HIDDEN = 2
+        private const val DEBUG_TAG = "BottomNavigationBehavior"
+    }
+}
+
+private class BottomNavigationViewAnimator(block: BottomNavigationViewAnimator.() -> Unit) {
+    var height by Delegates.notNull<Int>()
+    private var currentAnimator: ViewPropertyAnimator? = null
+    private lateinit var _child: BottomNavigationView
+    var bottomNavigationView: BottomNavigationView
+        get() = _child
+        set(value) {
+            _child = value
+        }
+
+    init {
+        this.block()
+    }
+
+    fun slideUp() {
         if (currentAnimator != null) {
             currentAnimator!!.cancel()
-            child.clearAnimation()
+            _child.clearAnimation()
         }
-        currentState = STATE_SHOWN
         animateChildTo(
-            child,
+            _child,
             0,
             ENTER_ANIMATION_DURATION.toLong(),
             AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR
         )
     }
 
-    private fun slideDown(child: BottomNavigationView) {
-        if (currentState == STATE_HIDDEN) {
-            return
-        }
+    fun slideDown() {
         if (currentAnimator != null) {
             currentAnimator!!.cancel()
-            child.clearAnimation()
+            _child.clearAnimation()
         }
-        currentState = STATE_HIDDEN
         animateChildTo(
-            child,
+            _child,
             height,
             EXIT_ANIMATION_DURATION.toLong(),
             AnimationUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR
@@ -127,8 +154,5 @@ class BottomNavigationBehavior(
     companion object {
         private const val ENTER_ANIMATION_DURATION = 225
         private const val EXIT_ANIMATION_DURATION = 175
-        private const val STATE_SHOWN = 1
-        private const val STATE_HIDDEN = 2
-        private const val DEBUG_TAG = "BottomNavigationBehavior"
     }
 }
