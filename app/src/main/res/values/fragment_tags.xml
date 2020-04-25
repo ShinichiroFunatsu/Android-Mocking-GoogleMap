@@ -1,0 +1,5 @@
+<resources>
+    <string name="tag_search_omnibox_container" translatable="false">
+        search_omnibox_container
+    </string>
+</resources>

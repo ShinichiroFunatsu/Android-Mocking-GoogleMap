@@ -7,5 +7,7 @@
     <string name="nav_saved">Saved</string>
     <string name="nav_contribute">Contribute</string>
     <string name="nav_updates">Updates</string>
+    <string name="voice_search">Voice search</string>
+    <string name="search_here">Search here</string>
 
 </resources>

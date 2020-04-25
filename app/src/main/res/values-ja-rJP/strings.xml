@@ -6,4 +6,6 @@
     <string name="nav_saved">保存済み</string>
     <string name="nav_contribute">投稿</string>
     <string name="nav_updates">最新</string>
+    <string name="voice_search">音声検索</string>
+    <string name="search_here">ここで検索</string>
 </resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="1"
+    android:elevation="3dp"
+    tools:context=".search.SearchOmniboxFragment"
+    tools:background="@android:color/darker_gray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="3dp"
+        tools:ignore="UselessParent"
+        android:background="@drawable/bg_search_omnibox">
+
+        <TextView
+            android:id="@+id/search_omnibox_text_box"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@string/search_here"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:clickable="true"
+            android:contentDescription="@string/voice_search"
+            android:src="@drawable/ic_mic" />
+
+        <FrameLayout
+            android:id="@+id/selected_account_disc"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            tools:ignore="ContentDescription">
+
+            <ImageView
+                android:id="@+id/og_apd_internal_image_view"
+                android:src="@drawable/ic_account_default"
+                android:padding="8dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+
+            <ImageView
+                android:id="@+id/og_apd_ring_view"
+                android:layout_width="39dp"
+                android:layout_height="39dp"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+</FrameLayout>
