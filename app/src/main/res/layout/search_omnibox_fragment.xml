@@ -30,7 +30,7 @@
         <ImageButton
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@null"
+            android:background="?selectableItemBackgroundBorderless"
             android:clickable="true"
             android:contentDescription="@string/voice_search"
             android:src="@drawable/ic_mic" />
