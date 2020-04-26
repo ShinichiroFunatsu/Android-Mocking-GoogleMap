@@ -23,9 +23,16 @@ class MainMapFragment : Fragment(R.layout.mainmap_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProvider(this).get(MainMapViewModel::class.java)
+        setupStatusBar(view)
         singleTapDetector(view).onSingleTapUp.observe(viewLifecycleOwner) {
             view.search_omnibox_container.behavior?.onSingleTap()
             view.footer_container.behavior?.onSingleTap()
         }
+    }
+
+    private fun setupStatusBar(view: View) {
+        view.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        requireActivity().window.statusBarColor = requireContext().getColor(R.color.statusBar)
     }
 }
