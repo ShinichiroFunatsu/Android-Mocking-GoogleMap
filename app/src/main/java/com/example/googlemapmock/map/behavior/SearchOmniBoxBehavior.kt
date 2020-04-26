@@ -30,7 +30,7 @@ class SearchOmniBoxBehavior(
         searchOmniBoxContainerAnimator =
             SearchOmniBoxContainerAnimator {
                 val paramsCompat = child.layoutParams as ViewGroup.MarginLayoutParams
-                height = child.measuredHeight + paramsCompat.bottomMargin
+                height = child.measuredHeight + paramsCompat.topMargin
                 omniSearchBoxContainer = child
             }
         return super.onLayoutChild(parent, child, layoutDirection)
