@@ -9,9 +9,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewPropertyAnimator
+import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.animation.AnimationUtils
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.properties.Delegates
 
 /**
@@ -20,14 +20,14 @@ import kotlin.properties.Delegates
 class BottomNavigationBehavior(
     context: Context,
     attributeSet: AttributeSet? = null
-) : CoordinatorLayout.Behavior<BottomNavigationView>(context, attributeSet), OnSingleTapBehavior {
+) : CoordinatorLayout.Behavior<LinearLayout>(context, attributeSet), OnSingleTapBehavior {
 
     private lateinit var bottomNavigationViewAnimator: BottomNavigationViewAnimator
     private var currentState = STATE_SHOWN
 
     override fun onLayoutChild(
         parent: CoordinatorLayout,
-        child: BottomNavigationView,
+        child: LinearLayout,
         layoutDirection: Int
     ): Boolean {
         bottomNavigationViewAnimator =
@@ -80,8 +80,8 @@ class BottomNavigationBehavior(
 private class BottomNavigationViewAnimator(block: BottomNavigationViewAnimator.() -> Unit) {
     var height by Delegates.notNull<Int>()
     private var currentAnimator: ViewPropertyAnimator? = null
-    private lateinit var _child: BottomNavigationView
-    var bottomNavigationView: BottomNavigationView
+    private lateinit var _child: LinearLayout
+    var bottomNavigationView: LinearLayout
         get() = _child
         set(value) {
             _child = value
@@ -119,7 +119,7 @@ private class BottomNavigationViewAnimator(block: BottomNavigationViewAnimator.(
     }
 
     private fun animateChildTo(
-        child: BottomNavigationView,
+        child: LinearLayout,
         targetY: Int,
         duration: Long,
         interpolator: TimeInterpolator,

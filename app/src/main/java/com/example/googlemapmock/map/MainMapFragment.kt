@@ -25,7 +25,7 @@ class MainMapFragment : Fragment(R.layout.mainmap_fragment) {
         viewModel = ViewModelProvider(this).get(MainMapViewModel::class.java)
         singleTapDetector(view).onSingleTapUp.observe(viewLifecycleOwner) {
             view.search_omnibox_container.behavior?.onSingleTap()
-            view.nav_view.behavior?.onSingleTap()
+            view.footer_container.behavior?.onSingleTap()
         }
     }
 }

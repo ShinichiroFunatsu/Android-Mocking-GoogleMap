@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="1"
-    android:elevation="3dp"
     android:fitsSystemWindows="true"
     tools:background="@android:color/darker_gray"
     tools:context=".search.SearchOmniboxFragment">
@@ -15,6 +13,7 @@
         android:layout_margin="8dp"
         android:background="@drawable/bg_search_omnibox"
         android:orientation="horizontal"
+        android:elevation="3dp"
         android:paddingStart="20dp"
         android:paddingEnd="3dp"
         tools:ignore="UselessParent">
