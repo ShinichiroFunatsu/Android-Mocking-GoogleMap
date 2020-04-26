@@ -27,12 +27,11 @@ class SearchOmniboxBehavior(
         child: FragmentContainerView,
         layoutDirection: Int
     ): Boolean {
-        searchOmniboxContainerAnimator =
-            SearchOmniboxContainerAnimator {
-                val paramsCompat = child.layoutParams as ViewGroup.MarginLayoutParams
-                height = child.measuredHeight + paramsCompat.topMargin
-                omniSearchBoxContainer = child
-            }
+        searchOmniboxContainerAnimator = SearchOmniboxContainerAnimator {
+            val paramsCompat = child.layoutParams as ViewGroup.MarginLayoutParams
+            height = child.measuredHeight + paramsCompat.topMargin
+            omniSearchBoxContainer = child
+        }
         return super.onLayoutChild(parent, child, layoutDirection)
     }
 
@@ -54,8 +53,7 @@ class SearchOmniboxBehavior(
             return
         }
         searchOmniboxContainerAnimator.slideUp()
-        currentState =
-            STATE_HIDDEN
+        currentState = STATE_HIDDEN
     }
 
     private fun slideDown() {
@@ -63,8 +61,7 @@ class SearchOmniboxBehavior(
             return
         }
         searchOmniboxContainerAnimator.slideDown()
-        currentState =
-            STATE_SHOWN
+        currentState = STATE_SHOWN
     }
 
     companion object {

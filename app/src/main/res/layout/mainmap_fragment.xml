@@ -16,17 +16,22 @@
     <!--        android:layout_width="96dp"-->
     <!--        android:layout_height="76dp" />-->
 
+    <FrameLayout
+        android:id="@+id/home_bottom_sheet_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="65dp"></FrameLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/search_omnibox_container"
         android:name="com.example.googlemapmock.search.SearchOmniboxFragment"
-        android:layout_gravity="top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:layout_height="54dp"
+        android:layout_gravity="top"
+        android:tag="@string/tag_search_omnibox_container"
         app:layout_behavior="@string/hide_search_omnibox_touch_behavior"
         app:layout_insetEdge="top"
-        android:tag="@string/tag_search_omnibox_container" />
+        tools:layout_height="54dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -44,14 +49,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:fitsSystemWindows="true"
-        app:layout_insetEdge="bottom"
+        android:orientation="vertical"
         app:layout_behavior="@string/hide_bottom_view_on_touch_behavior"
-        android:orientation="vertical">
+        app:layout_insetEdge="bottom">
 
         <ImageView
-            android:src="@drawable/bg_footer_above_shadow"
             android:layout_width="match_parent"
             android:layout_height="5dp"
+            android:src="@drawable/bg_footer_above_shadow"
             tools:ignore="ContentDescription" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -62,7 +67,6 @@
             app:labelVisibilityMode="labeled"
             app:menu="@menu/bottom_nav_menu" />
     </LinearLayout>
-
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

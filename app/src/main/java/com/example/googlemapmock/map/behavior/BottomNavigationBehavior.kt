@@ -30,12 +30,11 @@ class BottomNavigationBehavior(
         child: LinearLayout,
         layoutDirection: Int
     ): Boolean {
-        bottomNavigationViewAnimator =
-            BottomNavigationViewAnimator {
-                val paramsCompat = child.layoutParams as MarginLayoutParams
-                height = child.measuredHeight + paramsCompat.bottomMargin
-                bottomNavigationView = child
-            }
+        bottomNavigationViewAnimator = BottomNavigationViewAnimator {
+            val paramsCompat = child.layoutParams as MarginLayoutParams
+            height = child.measuredHeight + paramsCompat.bottomMargin
+            bottomNavigationView = child
+        }
         return super.onLayoutChild(parent, child, layoutDirection)
     }
 
@@ -57,8 +56,7 @@ class BottomNavigationBehavior(
             return
         }
         bottomNavigationViewAnimator.slideUp()
-        currentState =
-            STATE_SHOWN
+        currentState = STATE_SHOWN
     }
 
     private fun slideDown() {
@@ -66,8 +64,7 @@ class BottomNavigationBehavior(
             return
         }
         bottomNavigationViewAnimator.slideDown()
-        currentState =
-            STATE_HIDDEN
+        currentState = STATE_HIDDEN
     }
 
     companion object {

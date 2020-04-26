@@ -15,6 +15,7 @@ interface LifecycleAwareGestureDetector {
     val onLongPress: LiveData<Unit>
     fun onTouchEvent(event: MotionEvent): Boolean
 }
+
 @Suppress("FunctionName")
 fun GestureDetectorCompat(
     context: Context

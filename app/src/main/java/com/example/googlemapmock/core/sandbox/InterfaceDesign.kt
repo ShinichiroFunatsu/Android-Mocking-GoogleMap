@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.example.googlemapmock.core.sandbox
 
 import android.location.Location
