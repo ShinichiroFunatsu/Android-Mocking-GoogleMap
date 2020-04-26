@@ -14,12 +14,12 @@ import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.animation.AnimationUtils
 import kotlin.properties.Delegates
 
-class SearchOmniBoxBehavior(
+class SearchOmniboxBehavior(
     context: Context,
     attributeSet: AttributeSet? = null
 ) : CoordinatorLayout.Behavior<FragmentContainerView>(context, attributeSet), OnSingleTapBehavior {
 
-    private lateinit var searchOmniBoxContainerAnimator: SearchOmniBoxContainerAnimator
+    private lateinit var searchOmniboxContainerAnimator: SearchOmniboxContainerAnimator
     private var currentState = STATE_SHOWN
 
     override fun onLayoutChild(
@@ -27,8 +27,8 @@ class SearchOmniBoxBehavior(
         child: FragmentContainerView,
         layoutDirection: Int
     ): Boolean {
-        searchOmniBoxContainerAnimator =
-            SearchOmniBoxContainerAnimator {
+        searchOmniboxContainerAnimator =
+            SearchOmniboxContainerAnimator {
                 val paramsCompat = child.layoutParams as ViewGroup.MarginLayoutParams
                 height = child.measuredHeight + paramsCompat.topMargin
                 omniSearchBoxContainer = child
@@ -53,7 +53,7 @@ class SearchOmniBoxBehavior(
         if (currentState == STATE_HIDDEN) {
             return
         }
-        searchOmniBoxContainerAnimator.slideUp()
+        searchOmniboxContainerAnimator.slideUp()
         currentState =
             STATE_HIDDEN
     }
@@ -62,7 +62,7 @@ class SearchOmniBoxBehavior(
         if (currentState == STATE_SHOWN) {
             return
         }
-        searchOmniBoxContainerAnimator.slideDown()
+        searchOmniboxContainerAnimator.slideDown()
         currentState =
             STATE_SHOWN
     }
@@ -74,7 +74,7 @@ class SearchOmniBoxBehavior(
     }
 }
 
-private class SearchOmniBoxContainerAnimator(block: SearchOmniBoxContainerAnimator.() -> Unit) {
+private class SearchOmniboxContainerAnimator(block: SearchOmniboxContainerAnimator.() -> Unit) {
     var height by Delegates.notNull<Int>()
     private var currentAnimator: ViewPropertyAnimator? = null
     private lateinit var _child: FragmentContainerView
