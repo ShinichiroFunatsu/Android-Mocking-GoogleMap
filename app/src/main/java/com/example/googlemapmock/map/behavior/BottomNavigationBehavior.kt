@@ -100,7 +100,8 @@ private class BottomNavigationViewAnimator(block: BottomNavigationViewAnimator.(
             _child,
             0,
             ENTER_ANIMATION_DURATION.toLong(),
-            AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR
+            AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR,
+            ENTER_START_DELAY.toLong()
         )
     }
 
@@ -121,13 +122,15 @@ private class BottomNavigationViewAnimator(block: BottomNavigationViewAnimator.(
         child: BottomNavigationView,
         targetY: Int,
         duration: Long,
-        interpolator: TimeInterpolator
+        interpolator: TimeInterpolator,
+        startDelay: Long = 0
     ) {
         currentAnimator = child
             .animate()
             .translationY(targetY.toFloat())
             .setInterpolator(interpolator)
             .setDuration(duration)
+            .setStartDelay(startDelay)
             .setListener(
                 object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
@@ -137,7 +140,8 @@ private class BottomNavigationViewAnimator(block: BottomNavigationViewAnimator.(
     }
 
     companion object {
-        private const val ENTER_ANIMATION_DURATION = 225
-        private const val EXIT_ANIMATION_DURATION = 175
+        private const val ENTER_START_DELAY = 120
+        private const val ENTER_ANIMATION_DURATION = 260
+        private const val EXIT_ANIMATION_DURATION = 275
     }
 }

@@ -96,8 +96,8 @@ private class SearchOmniBoxContainerAnimator(block: SearchOmniBoxContainerAnimat
         animateChildTo(
             _child,
             -height,
-            ENTER_ANIMATION_DURATION.toLong(),
-            AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR
+            EXIT_ANIMATION_DURATION.toLong(),
+            AnimationUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR
         )
     }
 
@@ -109,8 +109,9 @@ private class SearchOmniBoxContainerAnimator(block: SearchOmniBoxContainerAnimat
         animateChildTo(
             _child,
             0,
-            EXIT_ANIMATION_DURATION.toLong(),
-            AnimationUtils.FAST_OUT_LINEAR_IN_INTERPOLATOR
+            ENTER_ANIMATION_DURATION.toLong(),
+            AnimationUtils.LINEAR_OUT_SLOW_IN_INTERPOLATOR,
+            ENTER_START_DELAY.toLong()
         )
     }
 
@@ -118,13 +119,15 @@ private class SearchOmniBoxContainerAnimator(block: SearchOmniBoxContainerAnimat
         child: FragmentContainerView,
         targetY: Int,
         duration: Long,
-        interpolator: TimeInterpolator
+        interpolator: TimeInterpolator,
+        startDelay: Long = 0
     ) {
         currentAnimator = child
             .animate()
             .translationY(targetY.toFloat())
             .setInterpolator(interpolator)
             .setDuration(duration)
+            .setStartDelay(startDelay)
             .setListener(
                 object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
@@ -134,7 +137,8 @@ private class SearchOmniBoxContainerAnimator(block: SearchOmniBoxContainerAnimat
     }
 
     companion object {
-        private const val ENTER_ANIMATION_DURATION = 225
-        private const val EXIT_ANIMATION_DURATION = 175
+        private const val ENTER_START_DELAY = 120
+        private const val ENTER_ANIMATION_DURATION = 260
+        private const val EXIT_ANIMATION_DURATION = 275
     }
 }
